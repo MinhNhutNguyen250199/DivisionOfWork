@@ -1,4 +1,6 @@
 using DivisionOfWorkWebAPI.Database;
+using DivisionOfWorkWebAPI.Entities;
+using DivisionOfWorkWebAPI.Reponsitories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +31,11 @@ namespace DivisionOfWorkWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<DivisionOfWorkDbContext>();
+
             services.AddDbContext<DivisionOfWorkDbContext>
                (option => option.UseSqlServer(Configuration.GetConnectionString("DivisionOfWork")));
 
@@ -36,6 +43,15 @@ namespace DivisionOfWorkWebAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DivisionOfWorkWebAPI", Version = "v1" });
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .SetIsOriginAllowed(host => true)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
             });
         }
 
@@ -48,9 +64,10 @@ namespace DivisionOfWorkWebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DivisionOfWorkWebAPI v1"));
             }
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
