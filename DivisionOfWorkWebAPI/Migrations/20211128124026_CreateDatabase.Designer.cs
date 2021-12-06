@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DivisionOfWorkWebAPI.Migrations
 {
-    [DbContext(typeof(DivisionOfWorkDbContext))]
+    [DbContext(typeof(DivisionOfWorkSeedata))]
     [Migration("20211128124026_CreateDatabase")]
     partial class CreateDatabase
     {

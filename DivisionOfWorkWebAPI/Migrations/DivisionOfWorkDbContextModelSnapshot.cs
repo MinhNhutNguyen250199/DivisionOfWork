@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DivisionOfWorkWebAPI.Migrations
 {
-    [DbContext(typeof(DivisionOfWorkDbContext))]
+    [DbContext(typeof(DivisionOfWorkSeedata))]
     partial class DivisionOfWorkDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

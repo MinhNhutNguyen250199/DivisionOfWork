@@ -1,0 +1,25 @@
+﻿@using DivisionOfWorkModels.Enums;
+
+@switch (StatusTask)
+{
+    case StatusTask.Open:
+        <span class="badge badge-success">@nameof(StatusTask.Open)</span>
+        break;
+    case StatusTask.Inprogess:
+        <span class="badge badge-warning">@nameof(StatusTask.Inprogess)</span>
+        break;
+    case StatusTask.Resolved:
+        <span class="badge badge-secondary">@nameof(StatusTask.Resolved)</span>
+        break;
+    case StatusTask.Done:
+        <span class="badge badge-dark">@nameof(StatusTask.Done)</span>
+        break;
+    case StatusTask.Canceled:
+        <span class="badge badge-light">@nameof(StatusTask.Canceled)</span>
+        break;
+}
+
+@code {
+    [Parameter]
+    public StatusTask StatusTask { set; get; }
+}

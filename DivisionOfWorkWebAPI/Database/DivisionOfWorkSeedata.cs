@@ -1,7 +1,6 @@
 ﻿using DivisionOfWorkWebAPI.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +31,9 @@ namespace DivisionOfWorkWebAPI.Database
                 user.PasswordHash = _passwordHasher.HashPassword(user, "minhnhut123");
                 context.Users.Add(user);
             }
-
-           
-
             await context.SaveChangesAsync();
         }
+
+       
     }
 }

@@ -38,6 +38,8 @@ namespace DivisionOfWorkWebAPI
 
             services.AddDbContext<DivisionOfWorkDbContext>
                (option => option.UseSqlServer(Configuration.GetConnectionString("DivisionOfWork")));
+            services.AddIdentity<User, Role>()
+               .AddEntityFrameworkStores<DivisionOfWorkDbContext>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
