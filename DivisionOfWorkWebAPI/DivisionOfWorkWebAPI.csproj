@@ -25,4 +25,8 @@
     <ProjectReference Include="..\DivisionOfWorkModels\DivisionOfWorkModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

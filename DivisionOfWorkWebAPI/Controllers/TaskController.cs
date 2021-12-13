@@ -106,6 +106,34 @@ namespace DivisionOfWorkWebAPI.Controllers
             });
         }
 
+        [HttpPut]
+        [Route("{id}/assign")]
+        public async Task<IActionResult> AssignTask(int id, [FromBody] AssignTaskRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var taskFromDb = await _taskRepository.GetById(id);
+
+            if (taskFromDb == null)
+            {
+                return NotFound($"{id} is not found");
+            }
+
+            taskFromDb.AssigeeId = request.UserId.Value;
+            var taskResult = await _taskRepository.Update(taskFromDb);
+
+            return Ok(new TaskDto()
+            {
+                Name = taskResult.TaskName,
+                Status = taskResult.StatusTask,
+                Id = taskResult.IdTask,
+                AssigneeId = taskResult.AssigeeId,
+                Priority = taskResult.Priority,
+                CreatedDate = taskResult.CreateDate
+            });
+        }
+
 
     }
 }

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DivisionOfWorkWebAPI.Database;
-using DivisionOfWorkWebAPI.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -17,13 +16,7 @@ namespace DivisionOfWorkWebAPI
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-            host.MigrateDbContext<DivisionOfWorkDbContext>((context, services) =>
-            {
-                var logger = services.GetService<ILogger<DivisionOfWorkSeedata>>();
-                new DivisionOfWorkSeedata().SeedAsync(context, logger).Wait();
-            });
-            host.Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

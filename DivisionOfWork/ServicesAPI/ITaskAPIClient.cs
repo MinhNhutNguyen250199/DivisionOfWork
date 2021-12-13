@@ -13,6 +13,7 @@ namespace DivisionOfWork.ServicesAPI
         Task<TaskDto> GetTaskDetail(string id);
         Task<bool> CreateTask(TaskCreateRequest request);
         Task<bool> UpdateTask(int id, TaskUpdateRequest request);
+        Task<bool> AssignTask(int id, AssignTaskRequest request);
 
     }
 }

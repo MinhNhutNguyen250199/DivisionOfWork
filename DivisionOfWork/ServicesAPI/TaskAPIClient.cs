@@ -40,5 +40,11 @@ namespace DivisionOfWork.ServicesAPI
             var result = await _httpClient.PutAsJsonAsync($"/api/Task/{id}", request);
             return result.IsSuccessStatusCode;
         }
+
+        public async Task<bool> AssignTask(int id, AssignTaskRequest request)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"/api/Tasks/{id}/assign", request);
+            return result.IsSuccessStatusCode;
+        }
     }
 }

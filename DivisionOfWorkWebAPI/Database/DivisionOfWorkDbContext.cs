@@ -15,7 +15,13 @@ namespace DivisionOfWorkWebAPI.Database
         {
 
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Seed();
+            base.OnModelCreating(modelBuilder);
+        }
         public DbSet<Entities.Task> Tasks { get; set; }
+        public DbSet<UserInTask> UserInTasks { get; set; }
 
         
     }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DivisionOfWorkWebAPI.Migrations
 {
-    public partial class CreateDatabase : Migration
+    public partial class IdentityCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -180,6 +180,38 @@ namespace DivisionOfWorkWebAPI.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserInTasks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TaskId = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserInTasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserInTasks_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserInTasks_Tasks_TaskId",
+                        column: x => x.TaskId,
+                        principalTable: "Tasks",
+                        principalColumn: "IdTask",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { 1, 0, "47726656-1973-4c75-a196-56d77c4df3c4", "nmna7911@gmail.com", true, "Nhut", "Nguyen", false, null, "nmna7911@gmail.com", "admin", "AQAAAAEAACcQAAAAEO7BqkjbDgPd/jZ2u+QJAwk+mCreTVW3Tc/X9jKAmYvt9VyeREgcurDfvcPL6eEg8Q==", null, false, "", false, "admin" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -223,6 +255,16 @@ namespace DivisionOfWorkWebAPI.Migrations
                 name: "IX_Tasks_AssigeeId",
                 table: "Tasks",
                 column: "AssigeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserInTasks_TaskId",
+                table: "UserInTasks",
+                column: "TaskId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserInTasks_UserId",
+                table: "UserInTasks",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -243,10 +285,13 @@ namespace DivisionOfWorkWebAPI.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Tasks");
+                name: "UserInTasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Tasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
